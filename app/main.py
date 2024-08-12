@@ -11,8 +11,7 @@ def main():
     # Wait for user input
     command = input()
 
-    if command not in command_set:
-        sys.stdout.write(command + ": command not found")
+    print(f"{command}: command not found")
 
 
 if __name__ == "__main__":
