@@ -54,15 +54,27 @@ def run_program(command, args):
     except subprocess.CalledProcessError as e:
         print(f"Process failed with error code: {e.returncode}")
 
-
+def cd(command, args):
+    new_path = args[0]
+    if new_path == "~":
+        os.chdir(os.getenv('HOME'))
+    else:
+        try:    
+            os.chdir(new_path)
+        except:
+            print(f"cd: {args[0]}: No such file or directory")
+    return os.getcwd()
 
 def main():
-    command_set = set(["exit", "echo", "type"])
+    command_set = set(["exit", "echo", "type", "pwd", "cd"])
     exit_status = ""
-
+    pwd = os.getcwd()
+    # Uncomment to manually set the PATH and HOME variable
     # Manually setting PATH variable for testing
     os.environ["PATH"] = "C:\\Users\\Parth\\Git\\codecrafters-shell-python;C:\\Users\\Parth\\Git\\codecrafters-shell-python\\app"
     
+    # Manually setting HOME variable for testing
+    os.environ["HOME"] = pwd
 
     run = True
     while(run):
@@ -93,6 +105,12 @@ def main():
 
         elif command == "type":
             type_command(command, args[0], command_set)
+
+        elif command == "pwd":
+            print(pwd)
+
+        elif command == "cd":
+            pwd = cd(command, args)
 
 
 
